@@ -14,23 +14,17 @@ def tryParse(parsable) :
         return False
     return True
 
-with open("D:/VS/Python/DiscordPrinterInterface/token.exe") as f :
+with open("./Token.txt") as f :
     token = f.read()
 client = commands.Bot(command_prefix = "🖨️ ", Intents = discord.Intents.all())
 
 @client.event
 async def on_ready():
     sender = ""
-    await client.change_presence(status=discord.Status.idle, activity=discord.Streaming(name='Printa', url='https://www.youtube.com/watch?v=GO5Ch8JDBEo')) #nastavit stav 
+    await client.change_presence(status=discord.Status.idle, activity=discord.Game(name='Printer')) #nastavit stav 
 
 @client.event
 async def on_message(message) :
- #   if message.author != sender :
- #       await client.process_commands(message)
- #   content = message.content.split(' ')
- #   if content[0] == "🖨️" and content[1] == "print" :
- #       channel = client.get_channel(message.channel.id)
- #       await channel.send(message.content)
     await client.process_commands(message)
 
 #CONNECT
@@ -82,11 +76,6 @@ async def getStatus(ctx) :
         return
     ctx.send("Not :printer: .")
 
-#MOGUS
-@client.command(aliases = [ "Mogus?", "mogus?" ])
-async def mogusQuestion(ctx) :
-    await ctx.send("Mogus.") #Mogus!
-
 @client.command()
 async def print(ctx, *, toPrint) :
     if connected :
@@ -127,20 +116,6 @@ async def feed(ctx) :
             await ctx.send(":printer: is already in use.")
     else :
         await ctx.send(":printer: not connected.")
-"""
-@client.command(aliases = [ "Rick" ])
-async def rick(ctx) :
-    if connected :
-        if sender == ctx.author :
-            with open("D:/VS/Python/DiscordPrinterInterface/rick.bmp") as pic :
-                ser.write([ 0x1b ])
-                ser.write(pic)
-                ser.write([ 0x1d, 0x2f, 0x00 ])
-        else :
-            await ctx.send(":printer: is already in use.")
-    else :
-        await ctx.send(":printer: not connected.")
-"""
 
 
 
